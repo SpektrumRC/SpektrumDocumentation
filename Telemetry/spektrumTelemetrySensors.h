@@ -69,6 +69,7 @@
 #define	TELE_DEVICE_RSV_6E	(0x6E)	// Reserved
 #define	TELE_DEVICE_RSV_6F	(0x6F)	// Reserved
 #define	TELE_DEVICE_RSV_70	(0x70)	// Reserved
+#define	TELE_DEVICE_RTC	(0x7C)	// Pseudo-device giving timestamp
 #define	TELE_DEVICE_FRAMEDATA	(0x7D)	// Transmitter frame data
 #define	TELE_DEVICE_RPM	(0x7E)	// RPM sensor
 #define	TELE_DEVICE_QOS	(0x7F)	// RxV + flight log data
@@ -720,16 +721,18 @@ typedef struct
 
 //////////////////////////////////////////////////////////////////
 //
-//		Transmitter Frame Data
+//				Real-Time Clock
 //
 //////////////////////////////////////////////////////////////////
 //
 typedef struct
 {
-	UINT8		identifier;	// Source device = 0x7D
-	UINT8		sID;		// Secondary ID
-	UINT16		chanData[7];	// Channel Data array
-} STRU_TELE_FRAMEDATA;
+	UINT8		identifier;		// Source device = 0x7C
+	UINT8		sID;			// Secondary ID
+	UINT8		spare[6];
+	UINT64		UTC64;			// Linux 64-bit time_t for 
+							// post-2038 date compatibility
+} STRU_TELE_RTC;
 
 //////////////////////////////////////////////////////////////////
 //
@@ -788,6 +791,7 @@ typedef struct
 typedef union
 {
 	UINT16		raw[8];
+	STRU_TELE_RTC	rtc;
 	STRU_TELE_QOS	qos;
 	STRU_TELE_RPM	rpm;
 	STRU_TELE_FRAMEDATA	frame;
@@ -817,3 +821,4 @@ typedef union
 	STRU_TELE_USER_16SU32S	user_16SU32S;
 	STRU_TELE_USER_16U32SU	user_16U32SU;
 } UN_TELEMETRY;			// All telemetry messages
+
