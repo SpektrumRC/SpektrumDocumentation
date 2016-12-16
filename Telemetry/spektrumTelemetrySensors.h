@@ -1,8 +1,6 @@
 //////////////////////////////////////////////////////////////////
 //
 //	Copyright 2013 by Horizon Hobby, Inc.  
-//	All Rights Reserved Worldwide.
-//
 //	Released to Public Domain
 //
 //	This header file may be incorporated into non-Horizon
