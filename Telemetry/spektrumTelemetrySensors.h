@@ -14,7 +14,8 @@
 //	Date:		2017-02-24
 //	Mods:		Sync to Spektrum internal version by matching sequence of
 //				structs, formatting, etc.  Also changed some structs from
-//				having "id" to "identifier."
+//				having "id" to "identifier."  Also redefined "spare" in Rx MAH
+//				to provide more bits for "chargeUsed" fields.
 //
 #ifndef TELEMETRY_H
 #define	TELEMETRY_H
@@ -234,7 +235,7 @@ typedef struct
 	UINT16		chargeUsed_B;													// Integrated mAh used, 0.1mAh (0-3276.6mAh)
 	UINT16		volts_B;														// Volts, 0.01V increments (0-16.00V)
 	UINT8		alerts,															// Bit mapped alert conditions (see below)
-				spare;															// Not used
+				highCharge;														// High nybble is extra bits for chargeUsed_B, Low is for chargeUsed_A
 } STRU_TELE_RX_MAH;
 
 #define	RXMAH_PS_ALERT_NONE			(0)											// No alarms
