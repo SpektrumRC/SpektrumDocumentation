@@ -76,6 +76,7 @@
 #define	TELE_DEVICE_RSV_6E			(0x6E)										// Reserved
 #define	TELE_DEVICE_RSV_6F			(0x6F)										// Reserved
 #define	TELE_DEVICE_RSV_70			(0x70)										// Reserved
+#define	TELE_DEVICE_ALT_ZERO		(0x7B)										// Pseudo-device setting Altitude "zero"
 #define	TELE_DEVICE_RTC				(0x7C)										// Pseudo-device giving timestamp
 #define	TELE_DEVICE_FRAMEDATA		(0x7D)										// Transmitter frame data
 #define	TELE_DEVICE_RPM				(0x7E)										// RPM sensor
@@ -768,6 +769,20 @@ typedef struct
 	INT16		magY;															// Units are TBD
 	INT16		magZ;															//
 } STRU_TELE_ATTMAG;
+
+//////////////////////////////////////////////////////////////////////////////
+//
+//						Altitude "Zero" Message
+//
+//////////////////////////////////////////////////////////////////////////////
+//
+typedef struct
+{
+	UINT8		identifier;														// Source device = 0x7B
+	UINT8		sID;															// Secondary ID
+	UINT8		spare[2];
+	UINT32		altOffset;														// Altitude "zero" log
+} STRU_TELE_ALT_ZERO;
 
 //////////////////////////////////////////////////////////////////////////////
 //
