@@ -340,7 +340,7 @@ typedef struct
 	UINT8		identifier;
 	UINT8		sID;															// Secondary ID
 	UINT8		lineNumber;														// Line number to display (0 = title, 1-8 for general, 255 = Erase all text on screen)
-	char		text[13];														// 0-terminated text
+	char		text[13];														// 0-terminated text when < 13 chars
 } STRU_TELE_TEXTGEN;
 
 //////////////////////////////////////////////////////////////////////////////
