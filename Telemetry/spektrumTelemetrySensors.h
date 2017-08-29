@@ -810,8 +810,9 @@ typedef struct
 	INT16		attPitch;														// Units are 0.1 deg - Pitch is a rotation about the Y Axis of the vehicle using the RHR.
 	INT16		attYaw;															// Yaw is a rotation about the Z Axis of the vehicle using the RHR.
 	INT16		magX;															// Magnetic Compass, 3 axes
-	INT16		magY;															// Units are TBD
+	INT16		magY;															// Units are 0.1mG
 	INT16		magZ;															//
+	UINT16		heading;														// Heading, 0.1deg
 } STRU_TELE_ATTMAG;
 
 //////////////////////////////////////////////////////////////////////////////
