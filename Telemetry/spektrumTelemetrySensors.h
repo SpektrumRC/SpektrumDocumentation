@@ -31,7 +31,7 @@
 #define	TELE_DEVICE_TEMPERATURE		(0x02)										// Temperature Sensor (INTERNAL)
 #define	TELE_DEVICE_AMPS			(0x03)										// Amps (INTERNAL)
 #define	TELE_DEVICE_RSV_04			(0x04)										// Reserved
-#define	TELE_DEVICE_RSV_05			(0x05)										// Reserved
+#define	TELE_DEVICE_FLITECTRL		(0x05)										// Flight Controller Status Report
 #define	TELE_DEVICE_RSV_06			(0x06)										// Reserved
 #define	TELE_DEVICE_RSV_07			(0x07)										// Reserved
 #define	TELE_DEVICE_RSV_08			(0x08)										// Reserved
@@ -39,6 +39,7 @@
 #define	TELE_DEVICE_PBOX			(0x0A)										// PowerBox
 #define	TELE_DEVICE_LAPTIMER		(0x0B)										// Lap Timer
 #define	TELE_DEVICE_TEXTGEN			(0x0C)										// Text Generator
+#define	TELE_DEVICE_VTX				(0x0D)										// Video Transmitter Feedback
 #define	TELE_DEVICE_AIRSPEED		(0x11)										// Air Speed (Eagle Tree Sensor)
 #define	TELE_DEVICE_ALTITUDE		(0x12)										// Altitude (Eagle Tree Sensor)
 #define	TELE_DEVICE_GMETER			(0x14)										// G-Force (Eagle Tree Sensor)
@@ -53,6 +54,7 @@
 #define	TELE_DEVICE_ESC				(0x20)										// Electronic Speed Control
 #define	TELE_DEVICE_FUEL			(0x22)										// Fuel Flow Meter
 #define	TELE_DEVICE_ALPHA6			(0x24)										// Alpha6 Stabilizer
+#define	TELE_DEVICE_GPS_BINARY		(0x26)										// GPS, binary format
 //	DO NOT USE						(0x30)										// Reserved for internal use
 //	DO NOT USE						(0x32)										// Reserved for internal use
 #define	TELE_DEVICE_FP_MAH			(0x34)										// Flight Battery Capacity (Dual)
@@ -67,6 +69,12 @@
 #define	TELE_DEVICE_USER_16U32SU	(0x56)										// User-Defined, STRU_TELE_USER_16U32SU
 #define	TELE_DEVICE_VSPEAK			(0x60)										// Reserved for V-Speak
 #define	TELE_DEVICE_SMOKE_EL		(0x61)										// Reserved for Smoke-EL.de
+#define	TELE_DEVICE_CROSSFIRE		(0x62)										// Reserved for Crossfire devices
+#define	TELE_DEVICE_RSV_63			(0x63)										// Reserved
+#define	TELE_DEVICE_RSV_64			(0x64)										// Reserved
+#define	TELE_DEVICE_RSV_65			(0x65)										// Reserved
+#define	TELE_DEVICE_EXTRF			(0x66)										// Reserved for Generic External RF sources
+#define	TELE_DEVICE_RSV_67			(0x67)										// Reserved
 #define	TELE_DEVICE_RSV_68			(0x68)										// Reserved
 #define	TELE_DEVICE_RSV_69			(0x69)										// Reserved
 #define	TELE_DEVICE_RSV_6A			(0x6A)										// Reserved
@@ -76,6 +84,16 @@
 #define	TELE_DEVICE_RSV_6E			(0x6E)										// Reserved
 #define	TELE_DEVICE_RSV_6F			(0x6F)										// Reserved
 #define	TELE_DEVICE_RSV_70			(0x70)										// Reserved
+#define	TELE_XRF_LINKSTATUS			(0x71)										// External RF Link Status
+#define	TELE_DEVICE_RSV_72			(0x72)										// Reserved
+#define	TELE_DEVICE_RSV_73			(0x73)										// Reserved
+#define	TELE_DEVICE_RSV_74			(0x74)										// Reserved
+#define	TELE_DEVICE_RSV_75			(0x75)										// Reserved
+#define	TELE_DEVICE_RSV_76			(0x76)										// Reserved
+#define	TELE_DEVICE_RSV_77			(0x77)										// Reserved
+#define	TELE_DEVICE_RSV_78			(0x78)										// Reserved
+#define	TELE_DEVICE_RSV_79			(0x79)										// Reserved
+#define	TELE_DEVICE_RSV_7A			(0x7A)										// Reserved
 #define	TELE_DEVICE_ALT_ZERO		(0x7B)										// Pseudo-device setting Altitude "zero"
 #define	TELE_DEVICE_RTC				(0x7C)										// Pseudo-device giving timestamp
 #define	TELE_DEVICE_FRAMEDATA		(0x7D)										// Transmitter frame data
@@ -345,6 +363,27 @@ typedef struct
 
 //////////////////////////////////////////////////////////////////////////////
 //
+//							VIDEO TRANSMITTER (VTX)
+//
+//////////////////////////////////////////////////////////////////////////////
+//
+//	VTX spec subject to change. Refer to Spektrum VTX Interfacing document for latest info
+//
+typedef struct
+{
+	UINT8		identifier;
+	UINT8		sID;															// Secondary ID
+	UINT8		band;															// VTX Band (0 = Fatshark, 1 = Raceband, 2 = E, 3 = B, 4 = A, 5-7 = Reserved)
+	UINT8		channel;														// VTX Channel (0-7)
+	UINT8		pit;															// Pit/Race mode (0 = Race, 1 = Pit). Race = (normal operating) mode. Pit = (reduced power) mode. When PIT is set, it overrides all other power settings.
+	UINT8		power;															// VTX Power (0 = Off, 1 = 1mw to 14mW, 2 = 15mW to 25mW, 3 = 26mW to 99mW, 4 = 100mW to 299mW, 5 = 300mW to 600mW, 6 = 601mW+, 7 = manual control)
+	UINT16		powerDec;														// VTX Power as a decimal 1mw/unit
+	UINT8		region;															// Region (0 = USA, 1 = EU, 0xFF = Not Provided)
+	UINT8		unused[7];														// reserved
+} STRU_TELE_VTX;
+
+//////////////////////////////////////////////////////////////////////////////
+//
 //							ESC
 //
 //////////////////////////////////////////////////////////////////////////////
@@ -357,7 +396,7 @@ typedef struct
 	UINT16		voltsInput;														// Volts, 0.01v (0-655.34V)       0xFFFF --> "No data"
 	UINT16		tempFET;														// Temperature, 0.01C (0-655.34C) 0xFFFF --> "No data"
 	UINT16		currentMotor;													// Current, 10mA (0-655.34A)      0xFFFF --> "No data"
-	UINT16		tempBEC;														// Temperature, 0.1C (0-6553.4C)  0x7FFF --> "No data"
+	UINT16		tempBEC;														// Temperature, 0.1C (0-6553.4C)  0xFFFF --> "No data"
 	UINT8		currentBEC;														// BEC Current, 100mA (0-25.4A)   0xFF ----> "No data"
 	UINT8		voltsBEC;														// BEC Volts, 0.05V (0-12.70V)    0xFF ----> "No data"
 	UINT8		throttle;														// 0.5% (0-100%)                  0xFF ----> "No data"
@@ -396,10 +435,10 @@ typedef struct
 	UINT8		identifier;														// Source device = 0x34
 	UINT8		sID;															// Secondary ID
 	INT16		current_A;														// Instantaneous current, 0.1A (0-3276.8A)
-	INT16		chargeUsed_A;													// Integrated mAh used, 1mAh (0-32.766Ah)
+	INT16		chargeUsed_A;													// Integrated mAh used, 1mAh (0-32.768Ah)
 	UINT16		temp_A;															// Temperature, 0.1C (0-150C, 0x7FFF indicates not populated)
 	INT16		current_B;														// Instantaneous current, 0.1A (0-3276.8A)
-	INT16		chargeUsed_B;													// Integrated mAh used, 1mAh (0-32.766Ah)
+	INT16		chargeUsed_B;													// Integrated mAh used, 1mAh (0-32.768Ah)
 	UINT16		temp_B;															// Temperature, 0.1C (0-150C, 0x7FFF indicates not populated)
 	UINT16		spare;															// Not used
 } STRU_TELE_FP_MAH;
@@ -607,8 +646,18 @@ enum JETCAT_ECU_TURBINE_STATE {							// ECU Status definitions
 		JETCENT_ECU_STATE_RUNNING = 0x80,
 		JETCENT_ECU_STATE_STOP_ERROR = 0x81,
 		// undefined states 0x82-0x8F
-		
-		TURBINE_ECU_MAX_STATE = 0x8F
+		SWIWIN_ECU_STATE_STOP = 0x90,
+		SWIWIN_ECU_STATE_READY = 0x91,
+		SWIWIN_ECU_STATE_IGNITION = 0x92,
+		SWIWIN_ECU_STATE_PREHEAT = 0x93,
+		SWIWIN_ECU_STATE_FUEL_RAMP = 0x94,
+		SWIWIN_ECU_STATE_RUNNING = 0x95,
+		SWIWIN_ECU_STATE_COOLING = 0x96,
+		SWIWIN_ECU_STATE_RESTART_SWOVER = 0x97,
+		SWIWIN_ECU_STATE_NOTUSED = 0x98,
+		// undefined states 0x99-0x9F
+
+		TURBINE_ECU_MAX_STATE = 0x9F
 };
 
 enum JETCAT_ECU_OFF_CONDITIONS {					// ECU off conditions. Valid only when the ECUStatus = JETCAT_ECU_STATE_OFF
@@ -637,7 +686,7 @@ enum JETCAT_ECU_OFF_CONDITIONS {					// ECU off conditions. Valid only when the 
 		JETCAT_ECU_OFF_2nd_Engine_No_Comm,
 		JETCAT_ECU_MAX_OFF_COND,
 		// Jet Central
-		JETCENT_ECU_OFF_No_Off_Condition_defined = 24,		// ECU off conditions. Valid only when the ECUStatus = JETCENT_ECU_STATE_STOP or JETCENT_ECU_STATE_STOP_ERROR
+		JETCENT_ECU_OFF_No_Off_Condition_defined = 24,		// ECU off conditions. Valid only when the ECUStatus = JETCENT_ECU_STATE_STOP or JETCENT_ECU_STATE_STOP_ERROR or JETCENT_ECU_STATE_RUNNING
 		JETCENT_ECU_OFF_IGNITION_ERROR,
 		JETCENT_ECU_OFF_PREHEAT_ERROR,
 		JETCENT_ECU_OFF_SWITCHOVER_ERROR,
@@ -719,6 +768,27 @@ typedef struct
 #define	GPS_INFO_FLAGS_3D_FIX						(1 << GPS_INFO_FLAGS_3D_FIX_BIT)
 #define GPS_INFO_FLAGS_NEGATIVE_ALT_BIT				(7)
 #define GPS_INFO_FLAGS_NEGATIVE_ALT					(1 << GPS_INFO_FLAGS_NEGATIVE_ALT_BIT)
+
+//////////////////////////////////////////////////////////////////////////////
+//
+//								GPS
+//							Binary Type
+//
+//		NOTE:	Data resolution for all fields matches Crossfire EXCEPT speed.
+//
+//////////////////////////////////////////////////////////////////////////////
+//
+typedef struct
+{
+	UINT8		identifier;														// Source device = 0x16
+	UINT8		sID;															// Secondary ID
+	UINT16		altitude;														// m, 1000m offset
+	INT32		latitude;														// degree / 10,000,000
+	INT32		longitude;														// degree / 10,000,000
+	UINT16		heading;														// degree / 10
+	UINT8		groundSpeed;													// km/h
+	UINT8		numSats;														// count
+} STRU_TELE_GPS_BINARY;
 
 //////////////////////////////////////////////////////////////////////////////
 //
@@ -876,6 +946,49 @@ typedef struct
 
 //////////////////////////////////////////////////////////////////////////////
 //
+//////////////////////////////////////////////////////////////////////////////
+//
+//							FLIGHT MODE
+//
+//////////////////////////////////////////////////////////////////////////////
+//
+typedef struct
+{
+	UINT8		identifier;														// Source device = 0x05 TELE_DEVICE_FLITECTRL
+	UINT8		sID;															// Secondary ID
+	UINT8		fMode,															// Current flight mode (low nybble)
+				spare8;
+	UINT16		spare[6];														// Growth
+	// Ideas -
+	//		arming status in a bitmap
+	//		time in state
+} STRU_TELE_FLITECTRL;
+
+
+//////////////////////////////////////////////////////////////////////////////
+//
+//							Crossfire QOS
+//
+//////////////////////////////////////////////////////////////////////////////
+//
+typedef struct
+{
+	UINT8		identifier;														// Source device = TELE_XRF_LINKSTATUS
+	UINT8		sID;															// Secondary ID
+	UINT8		ant1,					// dBm * -1
+				ant2,
+				quality;				// %
+	INT8		SNR;					// dB
+	UINT8		activeAnt,				// ant1=0, ant2=1
+				RFmode,					// 4fps=0, 50fps, 150Hz
+				upPower,				// 0mW=0, 10mW, 25mW, 100mW, 500mW, 1000mW, 2000mW
+				downlink,				// dBm * -1
+				qualityDown;			// %
+	INT8		SNRdown;				// dB
+} STRU_TELE_XF_QOS;
+
+//////////////////////////////////////////////////////////////////////////////
+//
 //						RPM/Volts/Temperature
 //
 //////////////////////////////////////////////////////////////////////////////
@@ -945,6 +1058,7 @@ typedef union
 	STRU_TELE_JETCAT2		jetcat2;
 	STRU_TELE_GPS_LOC		gpsloc;
 	STRU_TELE_GPS_STAT		gpsstat;
+	STRU_TELE_GPS_BINARY	gpsbin;
 	STRU_TELE_AS3X_LEGACY	as3x;
 	STRU_TELE_GYRO			gyro;
 	STRU_TELE_ALPHA6		alpha6;
@@ -963,8 +1077,11 @@ typedef union
 	STRU_TELE_USER_16SU32S	user_16SU32S;
 	STRU_TELE_USER_16U32SU	user_16U32SU;
 	STRU_TELE_TEXTGEN		textgen;
+	STRU_TELE_VTX			vtx;
 	STRU_TELE_V_SPEAK		vSpeak;
 	STRU_TELE_SMOKE_EL		smoke_el;
+	STRU_TELE_FLITECTRL		fControl;
+	STRU_TELE_XF_QOS		xfire;
 } UN_TELEMETRY;																	// All telemetry messages
 
 //////////////////////////////////////////////////////////////////
