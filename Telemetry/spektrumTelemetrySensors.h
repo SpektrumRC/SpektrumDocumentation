@@ -35,13 +35,17 @@
 #define	TELE_DEVICE_RSV_06			(0x06)										// Reserved
 #define	TELE_DEVICE_RSV_07			(0x07)										// Reserved
 #define	TELE_DEVICE_RSV_08			(0x08)										// Reserved
-#define	TELE_DEVICE_RSV_09			(0x09)										// Reserved
+//#define	DO_NOT_USE				(0x09)										// DO NOT USE!
 #define	TELE_DEVICE_PBOX			(0x0A)										// PowerBox
 #define	TELE_DEVICE_LAPTIMER		(0x0B)										// Lap Timer
 #define	TELE_DEVICE_TEXTGEN			(0x0C)										// Text Generator
 #define	TELE_DEVICE_VTX				(0x0D)										// Video Transmitter Feedback
+#define	TELE_DEVICE_RSV_0E			(0x0E)										// Reserved
+#define	TELE_DEVICE_RSV_0F			(0x0F)										// Reserved
+#define	TELE_DEVICE_RSV_10			(0x10)										// Reserved
 #define	TELE_DEVICE_AIRSPEED		(0x11)										// Air Speed (Eagle Tree Sensor)
 #define	TELE_DEVICE_ALTITUDE		(0x12)										// Altitude (Eagle Tree Sensor)
+#define	TELE_DEVICE_RSV_13			(0x13)										// Reserved
 #define	TELE_DEVICE_GMETER			(0x14)										// G-Force (Eagle Tree Sensor)
 #define	TELE_DEVICE_JETCAT			(0x15)										// Turbine interface (Eagle Tree)
 #define	TELE_DEVICE_GPS_LOC			(0x16)										// GPS Location Data (Eagle Tree)
@@ -50,23 +54,73 @@
 #define	TELE_DEVICE_JETCAT_2		(0x19)										// Turbine interface, message 2 format (Eagle Tree)
 #define	TELE_DEVICE_GYRO			(0x1A)										// 3-axis gyro
 #define	TELE_DEVICE_ATTMAG			(0x1B)										// Attitude and Magnetic Compass
+#define	TELE_DEVICE_TILT			(0x1C)										// Surface Tilt Sensor
+#define	TELE_DEVICE_RSV_1D			(0x1D)										// Reserved
+#define	TELE_DEVICE_AS6X_GAIN		(0x1E)										// Active AS6X Gains (new mode)
 #define	TELE_DEVICE_AS3X_LEGACYGAIN	(0x1F)										// Active AS3X Gains for legacy mode
 #define	TELE_DEVICE_ESC				(0x20)										// Electronic Speed Control
+#define	TELE_DEVICE_RSV_21			(0x21)										// Reserved
 #define	TELE_DEVICE_FUEL			(0x22)										// Fuel Flow Meter
+#define	TELE_DEVICE_RSV_23			(0x23)										// Reserved
 #define	TELE_DEVICE_ALPHA6			(0x24)										// Alpha6 Stabilizer
+#define	TELE_DEVICE_RSV_25			(0x25)										// Reserved
 #define	TELE_DEVICE_GPS_BINARY		(0x26)										// GPS, binary format
-//	DO NOT USE						(0x30)										// Reserved for internal use
-//	DO NOT USE						(0x32)										// Reserved for internal use
+#define	TELE_DEVICE_RSV_27			(0x27)										// Reserved
+#define	TELE_DEVICE_RSV_28			(0x28)										// Reserved
+#define	TELE_DEVICE_RSV_29			(0x29)										// Reserved
+#define	TELE_DEVICE_RSV_2A			(0x2A)										// Reserved
+#define	TELE_DEVICE_RSV_2B			(0x2B)										// Reserved
+#define	TELE_DEVICE_RSV_2C			(0x2C)										// Reserved
+#define	TELE_DEVICE_RSV_2D			(0x2D)										// Reserved
+#define	TELE_DEVICE_RSV_2E			(0x2E)										// Reserved
+#define	TELE_DEVICE_RSV_2F			(0x2F)										// Reserved
+//#define	DO_NOT_USE				(0x30)										// Internal ST sensor
+//#define	DO_NOT_USE				(0x32)										// Internal ST sensor
+#define	TELE_DEVICE_RSV_33			(0x33)										// Reserved
 #define	TELE_DEVICE_FP_MAH			(0x34)										// Flight Battery Capacity (Dual)
+#define	TELE_DEVICE_RSV_35			(0x35)										// Reserved
 #define	TELE_DEVICE_DIGITAL_AIR		(0x36)										// Digital Inputs & Tank Pressure
+#define	TELE_DEVICE_RSV_37			(0x37)										// Reserved
 #define	TELE_DEVICE_STRAIN			(0x38)										// Thrust/Strain Gauge
+#define	TELE_DEVICE_RSV_39			(0x39)										// Reserved
 #define	TELE_DEVICE_LIPOMON			(0x3A)										// 6S Cell Monitor (LiPo taps)
+#define	TELE_DEVICE_RSV_3B			(0x3B)										// Reserved
+#define	TELE_DEVICE_RSV_3C			(0x3C)										// Reserved
+#define	TELE_DEVICE_RSV_3D			(0x3D)										// Reserved
+#define	TELE_DEVICE_RSV_3E			(0x3E)										// Reserved
 #define	TELE_DEVICE_LIPOMON_14		(0x3F)										// 14S Cell Monitor (LiPo taps)
 #define	TELE_DEVICE_VARIO_S			(0x40)										// Vario
+#define	TELE_DEVICE_RSV_41			(0x41)										// Reserved
+#define	TELE_DEVICE_SMARTBATT		(0x42)										// Spektrum SMART Battery
+#define	TELE_DEVICE_RSV_43			(0x43)										// Reserved
+#define	TELE_DEVICE_RSV_44			(0x44)										// Reserved
+#define	TELE_DEVICE_RSV_45			(0x45)										// Reserved
+#define	TELE_DEVICE_RSV_46			(0x46)										// Reserved
+#define	TELE_DEVICE_RSV_47			(0x47)										// Reserved
+#define	TELE_DEVICE_RSV_48			(0x48)										// Reserved
+#define	TELE_DEVICE_RSV_49			(0x49)										// Reserved
+#define	TELE_DEVICE_RSV_4A			(0x4A)										// Reserved
+#define	TELE_DEVICE_RSV_4B			(0x4B)										// Reserved
+#define	TELE_DEVICE_RSV_4C			(0x4C)										// Reserved
+#define	TELE_DEVICE_RSV_4D			(0x4D)										// Reserved
+#define	TELE_DEVICE_RSV_4E			(0x4E)										// Reserved
+#define	TELE_DEVICE_RSV_4F			(0x4F)										// Reserved
 #define	TELE_DEVICE_USER_16SU		(0x50)										// User-Defined, STRU_TELE_USER_16SU
+#define	TELE_DEVICE_RSV_51			(0x51)										// Reserved
 #define	TELE_DEVICE_USER_16SU32U	(0x52)										// User-Defined, STRU_TELE_USER_16SU32U
+#define	TELE_DEVICE_RSV_53			(0x53)										// Reserved
 #define	TELE_DEVICE_USER_16SU32S	(0x54)										// User-Defined, STRU_TELE_USER_16SU32S
+#define	TELE_DEVICE_RSV_55			(0x55)										// Reserved
 #define	TELE_DEVICE_USER_16U32SU	(0x56)										// User-Defined, STRU_TELE_USER_16U32SU
+#define	TELE_DEVICE_RSV_57			(0x57)										// Reserved
+#define	TELE_DEVICE_RSV_58			(0x58)										// Reserved
+#define	TELE_DEVICE_MULTICYLINDER	(0x59)										// Multi-cylinder temp sensor
+#define	TELE_DEVICE_RSV_5A			(0x5A)										// Reserved
+#define	TELE_DEVICE_RSV_5B			(0x5B)										// Reserved
+#define	TELE_DEVICE_RSV_5C			(0x5C)										// Reserved
+#define	TELE_DEVICE_RSV_5D			(0x5D)										// Reserved
+#define	TELE_DEVICE_RSV_5E			(0x5E)										// Reserved
+#define	TELE_DEVICE_RSV_5F			(0x5F)										// Reserved
 #define	TELE_DEVICE_VSPEAK			(0x60)										// Reserved for V-Speak
 #define	TELE_DEVICE_SMOKE_EL		(0x61)										// Reserved for Smoke-EL.de
 #define	TELE_DEVICE_CROSSFIRE		(0x62)										// Reserved for Crossfire devices
@@ -78,7 +132,7 @@
 #define	TELE_DEVICE_RSV_68			(0x68)										// Reserved
 #define	TELE_DEVICE_RSV_69			(0x69)										// Reserved
 #define	TELE_DEVICE_RSV_6A			(0x6A)										// Reserved
-#define	TELE_DEVICE_RSV_6B			(0x6B)										// Reserved
+//#define	DO_NOT_USE				(0x6B)										// DO NOT USE!
 #define	TELE_DEVICE_RSV_6C			(0x6C)										// Reserved
 #define	TELE_DEVICE_RSV_6D			(0x6D)										// Reserved
 #define	TELE_DEVICE_RSV_6E			(0x6E)										// Reserved
@@ -96,12 +150,11 @@
 #define	TELE_DEVICE_RSV_7A			(0x7A)										// Reserved
 #define	TELE_DEVICE_ALT_ZERO		(0x7B)										// Pseudo-device setting Altitude "zero"
 #define	TELE_DEVICE_RTC				(0x7C)										// Pseudo-device giving timestamp
-#define	TELE_DEVICE_FRAMEDATA		(0x7D)										// Transmitter frame data
 #define	TELE_DEVICE_RPM				(0x7E)										// RPM sensor
 #define	TELE_DEVICE_QOS				(0x7F)										// RxV + flight log data
 #define	TELE_DEVICE_MAX				(0x7F)										// Last address available
 
-#define	TELE_DEVICE_SHORTRANGE		(0x80)										// Data is from a TM1100
+#define	TELE_DEVICE_SHORTRANGE		(0x80)										// OR this bit to indicate data is from a short-range telemetry device (e.g. TM1100)
 
 #define	TELE_DEVICE_MAX_PROGRAM		(0x70)										// Last programmable address when using sID
 
@@ -234,7 +287,7 @@ typedef struct
 {
 	UINT8		identifier;														// Source device = 0x02
 	UINT8		sID;															// Secondary ID
-	INT16		temperature;													// Changed to signed 2010-01-06 per PB e-mail
+	INT16		temperature;													// Temperature in degrees Fahrenheit
 } STRU_TELE_TEMP;
 
 //////////////////////////////////////////////////////////////////////////////
@@ -388,13 +441,15 @@ typedef struct
 //
 //////////////////////////////////////////////////////////////////////////////
 //
+//	Uses big-endian byte order
+//
 typedef struct
 {
 	UINT8		identifier;														// Source device = 0x20
 	UINT8		sID;															// Secondary ID
-	UINT16		RPM;															// RPM, 10RPM (0-655340 RPM)      0xFFFF --> "No data"
+	UINT16		RPM;															// Electrical RPM, 10RPM (0-655340 RPM)  0xFFFF --> "No data"
 	UINT16		voltsInput;														// Volts, 0.01v (0-655.34V)       0xFFFF --> "No data"
-	UINT16		tempFET;														// Temperature, 0.01C (0-655.34C) 0xFFFF --> "No data"
+	UINT16		tempFET;														// Temperature, 0.1C (0-6553.4C)  0xFFFF --> "No data"
 	UINT16		currentMotor;													// Current, 10mA (0-655.34A)      0xFFFF --> "No data"
 	UINT16		tempBEC;														// Temperature, 0.1C (0-6553.4C)  0xFFFF --> "No data"
 	UINT8		currentBEC;														// BEC Current, 100mA (0-25.4A)   0xFF ----> "No data"
@@ -434,11 +489,11 @@ typedef struct
 {
 	UINT8		identifier;														// Source device = 0x34
 	UINT8		sID;															// Secondary ID
-	INT16		current_A;														// Instantaneous current, 0.1A (0-3276.8A)
-	INT16		chargeUsed_A;													// Integrated mAh used, 1mAh (0-32.768Ah)
+	INT16		current_A;														// Instantaneous current, 0.1A (0-3276.6A)
+	INT16		chargeUsed_A;													// Integrated mAh used, 1mAh (0-32.766Ah)
 	UINT16		temp_A;															// Temperature, 0.1C (0-150C, 0x7FFF indicates not populated)
-	INT16		current_B;														// Instantaneous current, 0.1A (0-3276.8A)
-	INT16		chargeUsed_B;													// Integrated mAh used, 1mAh (0-32.768Ah)
+	INT16		current_B;														// Instantaneous current, 0.1A (0-3276.6A)
+	INT16		chargeUsed_B;													// Integrated mAh used, 1mAh (0-32.766Ah)
 	UINT16		temp_B;															// Temperature, 0.1C (0-150C, 0x7FFF indicates not populated)
 	UINT16		spare;															// Not used
 } STRU_TELE_FP_MAH;
@@ -451,10 +506,12 @@ typedef struct
 //
 typedef struct
 {
-	UINT8		identifier;														// Source device = 0x36
+	UINT8		identifier;														// Source device = TELE_DEVICE_DIGITAL_AIR
 	UINT8		sID;															// Secondary ID
 	UINT16		digital;														// Digital inputs (bit per input)
-	UINT16		pressure;														// Tank pressure, 0.1PSI (0-6553.4PSI)
+	UINT16		spare1;
+	UINT16		pressure[4];													// Tank pressure, 0.1PSI (0-6553.4PSI), 0xFFFF = Not Installed
+	UINT16		spare2;
 } STRU_TELE_DIGITAL_AIR;
 
 //////////////////////////////////////////////////////////////////////////////
@@ -524,6 +581,23 @@ typedef struct
 
 //////////////////////////////////////////////////////////////////////////////
 //
+//						SURFACE TILT (ATTITUDE) SENSOR
+//
+//////////////////////////////////////////////////////////////////////////////
+//
+typedef struct
+{
+	UINT8		identifier;														// Source device = 0x1C TELE_DEVICE_TILT
+	UINT8		sID;															// Secondary ID
+	INT16		attQuatX;														// Quaternion representing attitude using RHR. X component in Q14.
+	INT16		attQuatY;														// Y component in Q14.
+	INT16		attQuatZ;														// Z component in Q14.
+	INT16		attQuatW;														// W component in Q14.
+	UINT16		spare[3];
+} STRU_TELE_TILT;
+
+//////////////////////////////////////////////////////////////////////////////
+//
 //								TURBINE
 //
 //////////////////////////////////////////////////////////////////////////////
@@ -540,7 +614,7 @@ typedef struct
 	UINT16		EGT;															// (BCD) Temperature, Celsius
 	UINT8		offCondition;													// Table below
 	UINT8		spare;
-} STRU_TELE_JETCAT;	
+} STRU_TELE_JETCAT;
 
 enum JETCAT_ECU_TURBINE_STATE {							// ECU Status definitions
 		JETCAT_ECU_STATE_OFF = 0x00,
@@ -809,8 +883,33 @@ typedef struct
 	UINT8		activeRoll;														// Active gains per axis (as affected by FM channel)
 	UINT8		activePitch;
 	UINT8		activeYaw;
-	UINT8		unused[5];
+	UINT8		flightMode;														// bit 7 1 --> FM present in bits 0,1 except 0xFF --> not present
+	UINT8		unused[4];
 } STRU_TELE_AS3X_LEGACY;
+
+//////////////////////////////////////////////////////////////////////////////
+//
+//					AS6X Gain Report (AS3X Legacy + more fields)
+//
+//////////////////////////////////////////////////////////////////////////////
+//
+typedef struct
+{
+	UINT8		identifier;														// Source device = TELE_DEVICE_AS6X_GAIN
+	UINT8		sID;															// Secondary ID
+	UINT8		gainRoll;														// Configured normal gains per axis
+	UINT8		gainPitch;
+	UINT8		gainYaw;
+	UINT8		headRoll;														// Configured heading hold gains per axis
+	UINT8		headPitch;
+	UINT8		headYaw;
+	UINT8		activeRoll;														// Active gains per axis (as affected by FM channel)
+	UINT8		activePitch;
+	UINT8		activeYaw;
+	UINT8		flightMode;														// bit 7 1 --> FM present in bits 0,1 except 0xFF --> not present
+	// new fields go here:
+	UINT8		unused[4];
+} STRU_TELE_AS6X_GAIN;
 
 //////////////////////////////////////////////////////////////////////////////
 //
@@ -946,6 +1045,67 @@ typedef struct
 
 //////////////////////////////////////////////////////////////////////////////
 //
+//							MULTI-CYLINDER SENSOR
+//
+//////////////////////////////////////////////////////////////////////////////
+//
+typedef struct
+{
+	UINT8		identifier;														// Source device = TELE_DEVICE_MULTICYLINDER
+	UINT8		sID;															// Secondary ID
+	UINT8		temperature[9];													// Temperature, 1C increments, Offset = 30C, 0xFF = NO DATA
+				// 0x00 = 30C		(86F)
+				// 0x01 = 31C ...	(88F)
+				// 0xFE = 284C		(543F)
+				// 0xFF = NO SENSOR ATTACHED.  Note that sensors must be installed cylinder 1-9 in sequence!
+	UINT8		throttlePct;													// Throttle percent (0-100% typical, 0xFF = NO DATA)
+	UINT16		RPM;															// 4 RPM increments, Offset = 400RPM, range 404-16776.
+				// 0x000 = 0 RPM
+				// 0x001 = 404 RPM
+				// 0x002 = 408 RPM
+				// 0xFFE = 16776 RPM
+				// 0xFFF = NO SENSOR ATTACHED
+				// NOTE:  HI NYBBLE RESERVED, set to 0xF to mark "NO DATA" for now
+	UINT8		batteryV;														// Voltage, 0.1V increments, Offset = 3.5V, 0xFF = NO DATA
+				// 0x00 = 3.5V
+				// 0x01 = 3.6V
+				// 0xFE = 28.9V
+				// 0xFF = NO SENSOR ATTACHED
+	UINT8		spare;															// 0xFF --> no data
+} STRU_TELE_MULTI_TEMP;
+
+//////////////////////////////////////////////////////////////////////////////
+//
+//						Transmitter Frame Data
+//
+//////////////////////////////////////////////////////////////////////////////
+//
+typedef struct
+{
+	UINT8		identifier;														// Source device = 0x7D
+	UINT8		sID;															// Secondary ID
+	UINT16		chanData[7];													// Channel Data array
+} STRU_TELE_FRAMEDATA;
+
+//////////////////////////////////////////////////////////////////////////////
+//
+//							AHRS Monitor
+//
+//////////////////////////////////////////////////////////////////////////////
+//
+typedef struct
+{
+	UINT8		identifier;														// Source device = TELE_DEVICE_AHRS
+	UINT8		sID;															// Secondary ID
+	INT16		attRoll;														// Attitude, 3 axes.  Roll is a rotation about the X Axis of the vehicle using the RHR.
+	INT16		attPitch;														// Units are 0.1 deg - Pitch is a rotation about the Y Axis of the vehicle using the RHR.
+	INT16		attYaw;															// Roll is a rotation about the Z Axis of the vehicle using the RHR.
+	INT16		altitude;														// .1m increments
+	UINT8		waypoint;														// Waypoint number
+	UINT8		spare8;
+	UINT16		spare16[2];
+} STRU_TELE_AHRS;																// AHRS data from rx
+
 //////////////////////////////////////////////////////////////////////////////
 //
 //							FLIGHT MODE
@@ -993,15 +1153,19 @@ typedef struct
 //
 //////////////////////////////////////////////////////////////////////////////
 //
+//	Uses big-endian byte order
+//
 typedef struct
 {
 	UINT8		identifier;														// Source device = 0x7E
 	UINT8		sID;															// Secondary ID
 	UINT16		microseconds;													// microseconds between pulse leading edges
-	UINT16		volts;															// Added per V3 spec 2010-01-06, 0.01V increments
-	INT16		temperature;													// Added per V3 spec 2010-01-06.  0x7FFF = "No Data"
-	INT8		dBm_A,															// Average signal for A antenna in dBm.
-				dBm_B;															// Average signal for B antenna in dBm.  If only 1 antenna, set B = A
+	UINT16		volts;															// 0.01V increments (typically flight pack voltage)
+	INT16		temperature;													// Temperature in degrees F.  0x7FFF = "No Data"
+	INT8		dBm_A,															// Avg RSSI in dBm (<-1 = dBm, 0 = no data, >0 = % range) -- (legacy)antenna A in dBm
+				dBm_B;															// Avg RSSI in % (<-1 = dBm, 0 = no data, >0 = % range)   -- (legacy)antenna B in dBm
+																				// Note: Legacy use as antenna A/B dBm values is still supported. If only 1 antenna, set B = A.
+																				//       The "no data" value is 0, but -1 (0xFF) is treated the same for backwards compatibility
 	UINT16		spare[2];
 } STRU_TELE_RPM;
 
@@ -1026,13 +1190,13 @@ typedef struct
 {
 	UINT8		identifier;														// Source device = 0x7F
 	UINT8		sID;															// Secondary ID
-	UINT16		A;
-	UINT16		B;
-	UINT16		L;
-	UINT16		R;
-	UINT16		F;
-	UINT16		H;
-	UINT16		rxVoltage;														// Volts, .01V
+	UINT16		A;																// Internal/base receiver fades. 0xFFFF = "No data"
+	UINT16		B;																// Remote receiver fades. 0xFFFF = "No data"
+	UINT16		L;																// Third receiver fades. 0xFFFF = "No data"
+	UINT16		R;																// Fourth receiver fades. 0xFFFF = "No data"
+	UINT16		F;																// Frame losses. 0xFFFF = "No data"
+	UINT16		H;																// Holds. 0xFFFF = "No data"
+	UINT16		rxVoltage;														// Volts, .01V increment. 0xFFFF = "No data"
 } STRU_TELE_QOS;
 
 //////////////////////////////////////////////////////////////////////////////
@@ -1060,6 +1224,7 @@ typedef union
 	STRU_TELE_GPS_STAT		gpsstat;
 	STRU_TELE_GPS_BINARY	gpsbin;
 	STRU_TELE_AS3X_LEGACY	as3x;
+	STRU_TELE_AS6X_GAIN		as6x;
 	STRU_TELE_GYRO			gyro;
 	STRU_TELE_ALPHA6		alpha6;
 	STRU_TELE_ATTMAG		attMag;
@@ -1080,7 +1245,9 @@ typedef union
 	STRU_TELE_VTX			vtx;
 	STRU_TELE_V_SPEAK		vSpeak;
 	STRU_TELE_SMOKE_EL		smoke_el;
+	STRU_TELE_MULTI_TEMP	multiCylinder;
 	STRU_TELE_FLITECTRL		fControl;
+	STRU_TELE_TILT			tilt;
 	STRU_TELE_XF_QOS		xfire;
 } UN_TELEMETRY;																	// All telemetry messages
 
