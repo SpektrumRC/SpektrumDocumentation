@@ -65,7 +65,7 @@
 #define	TELE_DEVICE_ALPHA6			(0x24)										// Alpha6 Stabilizer
 #define	TELE_DEVICE_RSV_25			(0x25)										// Reserved
 #define	TELE_DEVICE_GPS_BINARY		(0x26)										// GPS, binary format
-#define	TELE_DEVICE_RSV_27			(0x27)										// Reserved
+#define	TELE_DEVICE_REMOTE_ID		(0x27)										// Remote ID (SkyID) (Sky_RID)
 #define	TELE_DEVICE_RSV_28			(0x28)										// Reserved
 #define	TELE_DEVICE_RSV_29			(0x29)										// Reserved
 #define	TELE_DEVICE_RSV_2A			(0x2A)										// Reserved
@@ -115,7 +115,7 @@
 #define	TELE_DEVICE_RSV_57			(0x57)										// Reserved
 #define	TELE_DEVICE_RSV_58			(0x58)										// Reserved
 #define	TELE_DEVICE_MULTICYLINDER	(0x59)										// Multi-cylinder temp sensor
-#define	TELE_DEVICE_RSV_5A			(0x5A)										// Reserved
+#define	TELE_DEVICE_MULTIENGINE		(0x5A)										// Multi-engine temp and RPM
 #define	TELE_DEVICE_RSV_5B			(0x5B)										// Reserved
 #define	TELE_DEVICE_RSV_5C			(0x5C)										// Reserved
 #define	TELE_DEVICE_RSV_5D			(0x5D)										// Reserved
@@ -629,17 +629,17 @@ enum JETCAT_ECU_TURBINE_STATE {							// ECU Status definitions
 		JETCAT_ECU_STATE_UNDEFINED = 0x07,
 		JETCAT_ECU_STATE_Slow_Down = 0x08,
 		JETCAT_ECU_STATE_Manual = 0x09,
-		JETCAT_ECU_STATE_AutoOff = 0x10,
-		JETCAT_ECU_STATE_Run = 0x11, // (reg.)
-		JETCAT_ECU_STATE_Accleleration_delay = 0x12,
-		JETCAT_ECU_STATE_SpeedReg = 0x13, // (Speed Ctrl)
-		JETCAT_ECU_STATE_Two_Shaft_Regulate = 0x14, // (only for secondary shaft)
-		JETCAT_ECU_STATE_PreHeat1 = 0x15,
-		JETCAT_ECU_STATE_PreHeat2 = 0x16,
-		JETCAT_ECU_STATE_MainFStart = 0x17,
-		JETCAT_ECU_STATE_NotUsed = 0x18,
-		JETCAT_ECU_STATE_KeroFullOn = 0x19,
-		// undefined states 0x1A-0x1F
+		JETCAT_ECU_STATE_AutoOff = 0x0A,
+		JETCAT_ECU_STATE_Run = 0x0B, // (reg.)
+		JETCAT_ECU_STATE_Accleleration_delay = 0x0C,
+		JETCAT_ECU_STATE_SpeedReg = 0x0D, // (Speed Ctrl)
+		JETCAT_ECU_STATE_Two_Shaft_Regulate = 0x0E, // (only for secondary shaft)
+		JETCAT_ECU_STATE_PreHeat1 = 0x0F,
+		JETCAT_ECU_STATE_PreHeat2 = 0x10,
+		JETCAT_ECU_STATE_MainFStart = 0x11,
+		JETCAT_ECU_STATE_NotUsed = 0x12,
+		JETCAT_ECU_STATE_KeroFullOn = 0x13,
+		// undefined states 0x14-0x1F
 		EVOJET_ECU_STATE_off = 0x20,
 		EVOJET_ECU_STATE_ignt = 0x21,
 		EVOJET_ECU_STATE_acce = 0x22,
@@ -827,6 +827,7 @@ typedef struct
 	UINT32		UTC;															// BCD, format HH:MM:SS.S, format 6.1
 	UINT8		numSats;														// BCD, 0-99
 	UINT8		altitudeHigh;													// BCD, meters, format 2.0 (High order of altitude)
+	UINT8		unused[6];
 } STRU_TELE_GPS_STAT;
 
 // GPS flags definitions:
@@ -856,7 +857,7 @@ typedef struct
 //
 typedef struct
 {
-	UINT8		identifier;														// Source device = 0x16
+	UINT8		identifier;														// Source device = 0x26
 	UINT8		sID;															// Secondary ID
 	UINT16		altitude;														// m, 1000m offset
 	INT32		latitude;														// degree / 10,000,000
@@ -1171,6 +1172,7 @@ typedef struct
 																				// Note: Legacy use as antenna A/B dBm values is still supported. If only 1 antenna, set B = A.
 																				//       The "no data" value is 0, but -1 (0xFF) is treated the same for backwards compatibility
 	UINT16		spare[2];
+	UINT16		fastbootUptime;													// bit 15 = fastboot flag.  Bits 0-14= uptime in seconds.  0x0000 --> no data
 } STRU_TELE_RPM;
 
 //////////////////////////////////////////////////////////////////////////////
@@ -1194,10 +1196,10 @@ typedef struct
 {
 	UINT8		identifier;														// Source device = 0x7F
 	UINT8		sID;															// Secondary ID
-	UINT16		A;																// Internal/base receiver fades. 0xFFFF = "No data"
-	UINT16		B;																// Remote receiver fades. 0xFFFF = "No data"
-	UINT16		L;																// Third receiver fades. 0xFFFF = "No data"
-	UINT16		R;																// Fourth receiver fades. 0xFFFF = "No data"
+	UINT16		A;																// Internal/base receiver fades. 0xFFFF = "No data".  Note that FFFF in SRXL2 will cause telemetry sender to overwrite.
+	UINT16		B;																// Remote receiver fades. 0xFFFE or 0xFFFF = "No data".
+	UINT16		L;																// Third receiver fades. 0xFFFE or 0xFFFF = "No data"
+	UINT16		R;																// Fourth receiver fades. 0xFFFE or 0xFFFF = "No data"
 	UINT16		F;																// Frame losses. 0xFFFF = "No data"
 	UINT16		H;																// Holds. 0xFFFF = "No data"
 	UINT16		rxVoltage;														// Volts, .01V increment. 0xFFFF = "No data"
