@@ -91,8 +91,8 @@
 #define	TELE_DEVICE_LIPOMON_14		(0x3F)										// 14S Cell Monitor (LiPo taps)
 #define	TELE_DEVICE_VARIO_S			(0x40)										// Vario
 #define	TELE_DEVICE_RSV_41			(0x41)										// Reserved
-#define	TELE_DEVICE_SMARTBATT		(0x42)										// Spektrum SMART Battery
-#define	TELE_DEVICE_RSV_43			(0x43)										// Reserved
+#define	TELE_DEVICE_SMARTBATT		(0x42)										// Spektrum SMART Battery (multiple structs)
+#define	TELE_DEVICE_SMART_RX		(0x43)										// Spektrum Receiver Smart Battery (same structs as 0x42)
 #define	TELE_DEVICE_RSV_44			(0x44)										// Reserved
 #define	TELE_DEVICE_RSV_45			(0x45)										// Reserved
 #define	TELE_DEVICE_RSV_46			(0x46)										// Reserved
@@ -143,13 +143,14 @@
 #define	TELE_DEVICE_RSV_73			(0x73)										// Reserved
 #define	TELE_DEVICE_RSV_74			(0x74)										// Reserved
 #define	TELE_DEVICE_RSV_75			(0x75)										// Reserved
-#define	TELE_DEVICE_RSV_76			(0x76)										// Reserved
+//#define	DO_NOT_USE				(0x76)										// DO NOT USE!
 #define	TELE_DEVICE_RSV_77			(0x77)										// Reserved
 #define	TELE_DEVICE_RSV_78			(0x78)										// Reserved
-#define	TELE_DEVICE_RSV_79			(0x79)										// Reserved
-#define	TELE_DEVICE_RSV_7A			(0x7A)										// Reserved
+#define	TELE_DEVICE_RXV				(0x79)										// Psuedo-device for RX Volts from QOS packet
+#define	TELE_DEVICE_TXINPUTS		(0x7A)										// Pseudo-device for transmitter input data
 #define	TELE_DEVICE_ALT_ZERO		(0x7B)										// Pseudo-device setting Altitude "zero"
 #define	TELE_DEVICE_RTC				(0x7C)										// Pseudo-device giving timestamp
+//#define	DO_NOT_USE				(0x7D)										// DO NOT USE!
 #define	TELE_DEVICE_RPM				(0x7E)										// RPM sensor
 #define	TELE_DEVICE_QOS				(0x7F)										// RxV + flight log data
 #define	TELE_DEVICE_MAX				(0x7F)										// Last address available
@@ -447,7 +448,7 @@ typedef struct
 {
 	UINT8		identifier;														// Source device = 0x20
 	UINT8		sID;															// Secondary ID
-	UINT16		RPM;															// Electrical RPM, 10RPM (0-655340 RPM)  0xFFFF --> "No data"
+	UINT16		RPM;															// Electrical RPM, 10RPM (0-655340 RPM)      0xFFFF --> "No data"
 	UINT16		voltsInput;														// Volts, 0.01v (0-655.34V)       0xFFFF --> "No data"
 	UINT16		tempFET;														// Temperature, 0.1C (0-6553.4C)  0xFFFF --> "No data"
 	UINT16		currentMotor;													// Current, 10mA (0-655.34A)      0xFFFF --> "No data"
@@ -1081,6 +1082,25 @@ typedef struct
 
 //////////////////////////////////////////////////////////////////////////////
 //
+//							MULTI-ENGINE SENSOR
+//
+//////////////////////////////////////////////////////////////////////////////
+//
+typedef struct
+{
+	UINT8		identifier;														// Source device = TELE_DEVICE_MULTIENGINE
+	UINT8		sID;															// Secondary ID
+	UINT8		temperature[4];													// Temperature, 1C increments, Offset = 30C, 0xFF = NO DATA
+	// 0x00 = 30C		(86F)
+	// 0x01 = 31C ...	(88F)
+	// 0xFE = 284C		(543F)
+	// 0xFF = NO SENSOR ATTACHED.  Note that sensors must be attached in sequence for proper display
+	UINT16		RPM[4];															// RPM, range 0-65534			0xFFFF --> "No data"
+	UINT16		batteryV;														// Volts, 0.01v (0-655.34V)		0xFFFF --> "No data"
+} STRU_TELE_MULTIENGINE;
+
+//////////////////////////////////////////////////////////////////////////////
+//
 //						Transmitter Frame Data
 //
 //////////////////////////////////////////////////////////////////////////////
@@ -1110,25 +1130,6 @@ typedef struct
 	UINT8		spare8;
 	UINT16		spare16[2];
 } STRU_TELE_AHRS;																// AHRS data from rx
-
-//////////////////////////////////////////////////////////////////////////////
-//
-//							FLIGHT MODE
-//
-//////////////////////////////////////////////////////////////////////////////
-//
-typedef struct
-{
-	UINT8		identifier;														// Source device = 0x05 TELE_DEVICE_FLITECTRL
-	UINT8		sID;															// Secondary ID
-	UINT8		fMode,															// Current flight mode (low nybble)
-				spare8;
-	UINT16		spare[6];														// Growth
-	// Ideas -
-	//		arming status in a bitmap
-	//		time in state
-} STRU_TELE_FLITECTRL;
-
 
 //////////////////////////////////////////////////////////////////////////////
 //
@@ -1207,6 +1208,47 @@ typedef struct
 
 //////////////////////////////////////////////////////////////////////////////
 //
+//							Remote ID Status
+//
+//////////////////////////////////////////////////////////////////////////////
+//
+typedef struct
+{
+	UINT8		identifier;														// Source device = TELE_DEVICE_REMOTE_ID 0x27
+	UINT8		sID;															// Secondary ID
+	UINT8		state;															// State info see below
+	UINT8		msgType;														// Message Type
+	UINT8		msgData[12];													// Message-specific data, determined by upper nybble of typeChannel (see defs below)
+} STRU_TELE_RID;
+
+#define	TELE_RID_STATE_NONE				(0xFF)									// Off, etc.  No data situation
+#define	TELE_RID_STATE_ACQUIRING		(0)										// Yellow LED - module has not yet acquired a GPS fix
+#define	TELE_RID_STATE_READY			(1)										// Green LED - module is ready for takeoff
+#define	TELE_RID_STATE_ONLINE			(2)										// Cyan - module believes it is in the air
+#define	TELE_RID_STATE_ONLINE_TIMEOUT	(3)										// Purple - recoverable error with the remote-ID module
+#define	TELE_RID_STATE_OFFLINE			(4)										// Red -  hard failure of the Remote-ID module
+
+#define	REMOTEID_MSG_TYPE_MASK_TBD				(0x1F)
+#define	REMOTEID_MSG_TYPE_MASK_MSGTYPE			(0xE0)
+
+#define REMOTEID_MSG_TYPE_ID_HHSER_1			(0 << 5)						// Bytes 0-11 - Sub-packets to build up 30 character Horizon Hobby ID
+#define REMOTEID_MSG_TYPE_ID_HHSER_2			(1 << 5)						// Bytes 12-21
+#define REMOTEID_MSG_TYPE_ID_HHSER_3			(2 << 5)						// Bytes 22-31 (+ zero terminated)
+
+#define REMOTEID_MSG_TYPE_ID_FAA_1				(3 << 5)						// Bytes 0-11 - Sub-packets to build up FAA serial number
+#define REMOTEID_MSG_TYPE_ID_FAA_2				(4 << 5)						// Bytes 12-21 (+ zero terminated)
+
+#define REMOTEID_MSG_TYPE_ID_PRODCODE			(5 << 5)						// Bytes 0-1 Product Code (little endian)
+																				// Byte  2 Version Major
+																				// Byte  3 Version Minor
+																				// Byte  4 Build
+																				// Bytes 5-12 SKU (zero terminated if < 8 chars)
+
+#define REMOTEID_MSG_TYPE_ID_TBD_C0				(6 << 5)						// Bytes 0-12 (+ zero terminated)
+#define REMOTEID_MSG_TYPE_ID_TBD_E0				(7 << 5)						// In case we need in the future
+
+//////////////////////////////////////////////////////////////////////////////
+//
 //					UNION OF ALL DEVICE MESSAGES
 //
 //////////////////////////////////////////////////////////////////////////////
@@ -1252,9 +1294,10 @@ typedef union
 	STRU_TELE_V_SPEAK		vSpeak;
 	STRU_TELE_SMOKE_EL		smoke_el;
 	STRU_TELE_MULTI_TEMP	multiCylinder;
-	STRU_TELE_FLITECTRL		fControl;
+	STRU_TELE_MULTIENGINE	multiEngine;
 	STRU_TELE_TILT			tilt;
 	STRU_TELE_XF_QOS		xfire;
+	STRU_TELE_RID			remoteID;
 } UN_TELEMETRY;																	// All telemetry messages
 
 //////////////////////////////////////////////////////////////////
